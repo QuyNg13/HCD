@@ -101,8 +101,8 @@ document.querySelector('.space').addEventListener('click', () => {
 
 // Voorkom dubbele spaties bij touch
 document.querySelector('.space').addEventListener('touchstart', (e) => {
+    e.preventDefault(); // Voorkom ongewild extra invoer van het spatiesymbool (␣)
     if (output.value.slice(-1) !== ' ') { // Controleer of de laatste teken geen spatie is
         output.value += ' ';
     }
-    e.preventDefault(); // Voorkom andere ongewenste gedragingen
 });
