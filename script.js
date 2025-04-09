@@ -12,9 +12,7 @@ function getSwipeDirection(deltaX, deltaY) {
     }
 }
 
-// Verwerkt een swipe-beweging en voegt de juiste letter toe aan de output
 function handleSwipe(key, direction) {
-    // Letters ophalen uit data-letters
     let letters = key.dataset.letters.split('-');
     let selectedLetter = '';
 
@@ -30,28 +28,21 @@ function handleSwipe(key, direction) {
     }
 }
 
-// event listener letterknoppen
 document.querySelectorAll('.key').forEach(key => {
-    // Start een touch-gebeurtenis en slaat de startpositie op
     key.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        startX = e.touches[0].clientX; // Startpositie X
-        startY = e.touches[0].clientY; // Startpositie Y
-        key.dataset.pressed = 'true'; // Markeert de knop als ingedrukt
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        key.dataset.pressed = 'true';
     });
 
-    // voegt de letter toe aan de output bij touchend
     key.addEventListener('touchend', (e) => {
-        e.preventDefault();
         if (key.dataset.pressed === 'true' && !key.classList.contains('space')) {
-            output.value += key.innerText.charAt(0); // Voegt de eerste letter van de knop toe
+            output.value += key.innerText.charAt(0);
         }
-        key.dataset.pressed = 'false'; // Reset de knopstatus
+        key.dataset.pressed = 'false';
     });
 
-    // Verwerkt een swipe-beweging tijdens een touch-gebeurtenis
     key.addEventListener('touchmove', (e) => {
-        e.preventDefault();
         if (key.dataset.pressed !== 'true') return;
 
         // Berekent de verplaatsing in X- en Y-richting
@@ -59,19 +50,12 @@ document.querySelectorAll('.key').forEach(key => {
         let deltaY = e.touches[0].clientY - startY;
         let direction = getSwipeDirection(deltaX, deltaY); // Bepaalt de swipe-richting
 
-        handleSwipe(key, direction); // Verwerkt de swipe
-        key.dataset.pressed = 'false'; // Reset de knopstatus
+        handleSwipe(key, direction);
+        key.dataset.pressed = 'false';
     });
 });
 
-// Voegt een spatie toe aan de output wanneer de spatieknop wordt losgelaten
+// Ensure the space button only adds a space
 document.querySelector('.space').addEventListener('touchend', (e) => {
-    e.preventDefault();
-    output.value += ' '; // Voegt een spatie toe
-});
-
-// Verwijdert het laatste teken uit de output wanneer de backspace-knop wordt losgelaten
-document.querySelector('.backspace').addEventListener('touchend', (e) => {
-    e.preventDefault();
-    output.value = output.value.slice(0, -1); // Verwijdert het laatste teken
+    output.value += ' ';
 });
