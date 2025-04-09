@@ -44,6 +44,7 @@ document.querySelectorAll('.key').forEach(key => {
 
     key.addEventListener('touchmove', (e) => {
         if (key.dataset.pressed !== 'true') return;
+        e.preventDefault();
 
         // Berekent de verplaatsing in X- en Y-richting
         let deltaX = e.touches[0].clientX - startX;
