@@ -37,7 +37,6 @@ document.querySelectorAll('.key').forEach(key => {
     });
 
     key.addEventListener('touchend', (e) => {
-        e.preventDefault();
         if (key.dataset.pressed === 'true' && !key.classList.contains('space')) {
             output.value += key.innerText.charAt(0);
         }
