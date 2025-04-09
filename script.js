@@ -13,9 +13,9 @@ function getSwipeDirection(deltaX, deltaY) {
 }
 
 // Verwerkt een swipe-beweging en voegt de juiste letter toe aan de output
-function handleSwipe(letter, direction) {
+function handleSwipe(key, direction) {
     // Letters ophalen uit data-letters
-    let letters = letter.dataset.letters.split('-');
+    let letters = key.dataset.letters.split('-');
     let selectedLetter = '';
 
     // Letter op basis van swipe richting

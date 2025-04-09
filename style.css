@@ -47,7 +47,7 @@ input {
 .space {
     width: calc(var(--key-width) * 2 + 10px);
     grid-column: 1 / 3;
-    background-color: #2ecc71;
+    background-color: #184a6c;
 }
 
 .backspace {
