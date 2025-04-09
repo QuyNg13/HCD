@@ -30,12 +30,14 @@ function handleSwipe(key, direction) {
 
 document.querySelectorAll('.key').forEach(key => {
     key.addEventListener('touchstart', (e) => {
+        e.preventDefault();
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
         key.dataset.pressed = 'true';
     });
 
     key.addEventListener('touchend', (e) => {
+        e.preventDefault();
         if (key.dataset.pressed === 'true' && !key.classList.contains('space')) {
             output.value += key.innerText.charAt(0);
         }
