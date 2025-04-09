@@ -59,3 +59,8 @@ document.querySelectorAll('.key').forEach(key => {
 document.querySelector('.space').addEventListener('touchend', (e) => {
     output.value += ' ';
 });
+
+document.querySelector('.backspace').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    output.value = output.value.slice(0, -1);
+});

@@ -28,6 +28,7 @@ input {
 }
 .keyboard {
     display: grid;
+    grid-template-columns: var(--key-width) var(--key-width) var(--key-width);
     gap: 10px;
 }
 .key {
@@ -44,8 +45,6 @@ input {
     cursor: pointer;
 }
 .space {
-    grid-column: span 3;
-    background-color: #2ecc71;
     font-size: 24px;
     width: calc(var(--key-width) * 2 + 10px);
     grid-column: 1 / 3;
