@@ -51,9 +51,17 @@ input {
 }
 
 .backspace {
+    width: var(--key-width);
+    height: var(--key-width);
     background-color: #e74c3c;
     color: white;
-    width: var(--key-width);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    user-select: none;
+    cursor: pointer;
 }
 
 .letters {
