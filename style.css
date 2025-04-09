@@ -77,6 +77,6 @@ button {
 .letters {
     font-size: 14px;
     margin-top: 5px;
-    color: rgb(240, 240, 240);
-    font-weight: 100;
+    color: white;
+    font-weight: normal;
 }
