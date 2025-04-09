@@ -1,10 +1,9 @@
-// Haalt output element op
 const output = document.getElementById('output');
 let startX, startY;
 
-// Richting van swipe defniëren
+// Richting van swipe ophalen
 function getSwipeDirection(deltaX, deltaY) {
-    //horizontaal of verticaal
+    // Bepaalt of de swipe horizontaal of verticaal is
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
         return deltaX > 0 ? 'right' : 'left'; // Rechts of links
     } else {
@@ -12,29 +11,33 @@ function getSwipeDirection(deltaX, deltaY) {
     }
 }
 
+// haalt swipe op en voegtletter toe aan de output
 function handleSwipe(key, direction) {
     let letters = key.dataset.letters.split('-');
     let selectedLetter = '';
 
-    // Letter op basis van swipe richting
+    // letter op basis swipe richting
     switch (direction) {
-        case 'left': selectedLetter = letters[0] || ''; break; // Omhoog
-        case 'right': selectedLetter = letters[1] || ''; break; // Omlaag
+        case 'left': selectedLetter = letters[0] || ''; break; // Links
+        case 'right': selectedLetter = letters[1] || ''; break; // Rechts
     }
 
-    // Voegt letter toe aan de output
+    // letter toevoegen aan de output
     if (selectedLetter) {
         output.value += selectedLetter;
     }
 }
 
+//event listeners bij alle toetsen
 document.querySelectorAll('.key').forEach(key => {
+    //detecteren van swipe
     key.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
         key.dataset.pressed = 'true';
     });
 
+    // Voegt de letter toe bij het loslaten van de toets
     key.addEventListener('touchend', (e) => {
         if (key.dataset.pressed === 'true' && !key.classList.contains('space')) {
             output.value += key.innerText.charAt(0);
@@ -42,6 +45,7 @@ document.querySelectorAll('.key').forEach(key => {
         key.dataset.pressed = 'false';
     });
 
+    // Detecteert swipe beweging
     key.addEventListener('touchmove', (e) => {
         if (key.dataset.pressed !== 'true') return;
 
@@ -55,12 +59,23 @@ document.querySelectorAll('.key').forEach(key => {
     });
 });
 
-// Ensure the space button only adds a space
+// Voegt een spatie toe bij het loslaten van de spatiebalk
 document.querySelector('.space').addEventListener('touchend', (e) => {
     output.value += ' ';
 });
 
+let backspaceInterval;
+
+// Start het verwijderen van tekst bij het ingedrukt houden van de backspace
+document.querySelector('.backspace').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    backspaceInterval = setInterval(() => {
+        output.value = output.value.slice(0, -1);
+    }, 80);
+});
+
+// Stopt het verwijderen van tekst bij het loslaten van de backspace
 document.querySelector('.backspace').addEventListener('touchend', (e) => {
     e.preventDefault();
-    output.value = output.value.slice(0, -1);
+    clearInterval(backspaceInterval);
 });
