@@ -30,7 +30,6 @@ function handleSwipe(key, direction) {
 
 document.querySelectorAll('.key').forEach(key => {
     key.addEventListener('touchstart', (e) => {
-        e.preventDefault();
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
         key.dataset.pressed = 'true';
@@ -54,7 +53,7 @@ document.querySelectorAll('.key').forEach(key => {
 
         handleSwipe(key, direction);
         key.dataset.pressed = 'false';
-    });
+    }, { passive: false });
 });
 
 // Ensure the space button only adds a space
