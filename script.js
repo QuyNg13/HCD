@@ -18,8 +18,8 @@ function handleSwipe(key, direction) {
 
     // Letter op basis van swipe richting
     switch (direction) {
-        case 'up': selectedLetter = letters[0] || ''; break; // Omhoog
-        case 'down': selectedLetter = letters[1] || ''; break; // Omlaag
+        case 'left': selectedLetter = letters[0] || ''; break; // Omhoog
+        case 'right': selectedLetter = letters[1] || ''; break; // Omlaag
     }
 
     // Voegt letter toe aan de output
@@ -44,7 +44,6 @@ document.querySelectorAll('.key').forEach(key => {
 
     key.addEventListener('touchmove', (e) => {
         if (key.dataset.pressed !== 'true') return;
-        e.preventDefault();
 
         // Berekent de verplaatsing in X- en Y-richting
         let deltaX = e.touches[0].clientX - startX;
@@ -53,7 +52,7 @@ document.querySelectorAll('.key').forEach(key => {
 
         handleSwipe(key, direction);
         key.dataset.pressed = 'false';
-    }, { passive: false });
+    });
 });
 
 // Ensure the space button only adds a space
