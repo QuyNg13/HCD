@@ -9,8 +9,8 @@ function getSwipeDirection(deltaX, deltaY) {
     }
 }
 
-function handleSwipe(key, direction) {
-    let letters = key.dataset.letters.split('-');
+function handleSwipe(letter, direction) {
+    let letters = letter.dataset.letters.split('-');
     let selectedLetter = '';
 
     switch (direction) {
@@ -23,33 +23,41 @@ function handleSwipe(key, direction) {
     }
 }
 
-document.querySelectorAll('.key').forEach(key => {
-    key.addEventListener('touchstart', (e) => {
+document.querySelectorAll('.letter').forEach(letter => {
+    letter.addEventListener('touchstart', (e) => {
+        e.preventDefault();
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
-        key.dataset.pressed = 'true';
+        letter.dataset.pressed = 'true';
     });
 
-    key.addEventListener('touchend', (e) => {
-        if (key.dataset.pressed === 'true' && !key.classList.contains('space')) {
-            output.value += key.innerText.charAt(0);
+    letter.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        if (letter.dataset.pressed === 'true' && !letter.classList.contains('space')) {
+            output.value += letter.innerText.charAt(0);
         }
-        key.dataset.pressed = 'false';
+        letter.dataset.pressed = 'false';
     });
 
-    key.addEventListener('touchmove', (e) => {
-        if (key.dataset.pressed !== 'true') return;
+    letter.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        if (letter.dataset.pressed !== 'true') return;
 
         let deltaX = e.touches[0].clientX - startX;
         let deltaY = e.touches[0].clientY - startY;
         let direction = getSwipeDirection(deltaX, deltaY);
 
-        handleSwipe(key, direction);
-        key.dataset.pressed = 'false';
+        handleSwipe(letter, direction);
+        letter.dataset.pressed = 'false';
     });
 });
 
-// Ensure the space button only adds a space
 document.querySelector('.space').addEventListener('touchend', (e) => {
+    e.preventDefault();
     output.value += ' ';
+});
+
+document.querySelector('.backspace').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    output.value = output.value.slice(0, -1);
 });
