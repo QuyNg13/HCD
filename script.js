@@ -1,6 +1,10 @@
 const output = document.getElementById('output');
 let startX, startY;
 
+document.addEventListener('touchmove', e => {
+    if (window.scrollY === 0 && e.touches[0].clientY > 0) e.preventDefault();
+  }, { passive: false });
+
 // Richting van swipe ophalen
 function getSwipeDirection(deltaX, deltaY) {
     // Bepaalt of de swipe horizontaal of verticaal is
