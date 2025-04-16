@@ -1,4 +1,5 @@
 const output = document.getElementById('output');
+const swipe_threshold = 20; // Drempel voor swipe detectie in pixels
 let startX, startY;
 
 document.addEventListener('touchmove', e => {
@@ -52,12 +53,16 @@ document.querySelectorAll('.key').forEach(key => {
     // Detecteert swipe beweging
     key.addEventListener('touchmove', (e) => {
         if (key.dataset.pressed !== 'true') return;
-
-        // Berekent de verplaatsing in X- en Y-richting
+    
         let deltaX = e.touches[0].clientX - startX;
         let deltaY = e.touches[0].clientY - startY;
-        let direction = getSwipeDirection(deltaX, deltaY); // Bepaalt de swipe-richting
-
+    
+        // Check if swipe distance is large enough
+        if (Math.abs(deltaX) < swipe_threshold && Math.abs(deltaY) < swipe_threshold) {
+            return; // Don't trigger anything if swipe is too small
+        }
+    
+        let direction = getSwipeDirection(deltaX, deltaY);
         handleSwipe(key, direction);
         key.dataset.pressed = 'false';
     });
