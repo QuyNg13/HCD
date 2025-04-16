@@ -2,8 +2,8 @@ const output = document.getElementById('output');
 let startX, startY;
 
 document.addEventListener('touchmove', e => {
-    if (window.scrollY === 0 && e.touches[0].clientY > 0) e.preventDefault();
-  }, { passive: false });
+  if (window.scrollY === 0 && e.touches[0].clientY > 0) e.preventDefault();
+}, { passive: false });
 
 // Richting van swipe ophalen
 function getSwipeDirection(deltaX, deltaY) {
@@ -22,8 +22,8 @@ function handleSwipe(key, direction) {
 
     // letter op basis swipe richting
     switch (direction) {
-        case 'left': selectedLetter = letters[0] || ''; break; // Links
-        case 'right': selectedLetter = letters[1] || ''; break; // Rechts
+        case 'up': selectedLetter = letters[0] || ''; break; 
+        case 'down': selectedLetter = letters[1] || ''; break; 
     }
 
     // letter toevoegen aan de output
@@ -75,7 +75,7 @@ document.querySelector('.backspace').addEventListener('touchstart', (e) => {
     e.preventDefault();
     backspaceInterval = setInterval(() => {
         output.value = output.value.slice(0, -1);
-    }, 80);
+    }, 50);
 });
 
 // Stopt het verwijderen van tekst bij het loslaten van de backspace
