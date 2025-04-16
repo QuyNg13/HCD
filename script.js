@@ -1,3 +1,4 @@
+window.addEventListener('DOMContentLoaded', () => {
 const output = document.getElementById('output');
 const swipe_threshold = 20; // Drempel voor swipe detectie in pixels
 let startX, startY;
@@ -5,6 +6,10 @@ let startX, startY;
 document.addEventListener('touchmove', e => {
   if (window.scrollY === 0 && e.touches[0].clientY > 0) e.preventDefault();
 }, { passive: false });
+
+//===========================
+// Swipe functionaliteit
+//===========================
 
 // Richting van swipe ophalen
 function getSwipeDirection(deltaX, deltaY) {
@@ -32,6 +37,10 @@ function handleSwipe(key, direction) {
         output.value += selectedLetter;
     }
 }
+
+//===========================
+// Toetsenbord
+//===========================
 
 //event listeners bij alle toetsen
 document.querySelectorAll('.key').forEach(key => {
@@ -68,6 +77,10 @@ document.querySelectorAll('.key').forEach(key => {
     });
 });
 
+//===========================
+// Space en Backspace
+//===========================
+
 // Voegt een spatie toe bij het loslaten van de spatiebalk
 document.querySelector('.space').addEventListener('touchend', (e) => {
     output.value += ' ';
@@ -87,4 +100,73 @@ document.querySelector('.backspace').addEventListener('touchstart', (e) => {
 document.querySelector('.backspace').addEventListener('touchend', (e) => {
     e.preventDefault();
     clearInterval(backspaceInterval);
+});
+
+//===========================
+// Toggle case en symbols
+//===========================
+
+let isUppercase = false;
+let isSymbols = false;
+
+// Original letter keys and swipe data
+const letterKeys = [
+    { label: 'I', letters: 'Q-L' },
+    { label: 'T', letters: 'V-Y' },
+    { label: 'A', letters: 'X-G' },
+    { label: 'D', letters: 'H-C' },
+    { label: 'O', letters: 'F-M' },
+    { label: 'R', letters: 'K-Z' },
+    { label: 'S', letters: 'J-P' },
+    { label: 'E', letters: 'B-W' },
+    { label: 'N', letters: 'U-.' },
+];
+
+// Alternative numbers/symbols layout
+const symbolKeys = [
+    { label: '1', letters: '!-~' },
+    { label: '2', letters: '@-`' },
+    { label: '3', letters: '#-^' },
+    { label: '4', letters: '$-*' },
+    { label: '5', letters: '%-(' },
+    { label: '6', letters: '^-)' },
+    { label: '7', letters: '&-_' },
+    { label: '8', letters: '*-+' },
+    { label: '9', letters: '(-=' },
+];
+
+document.querySelector('.toggle-numbers').addEventListener('touchend', () => {
+    isSymbols = !isSymbols;
+    updateKeyboardLayout();
+});
+
+function updateKeyboardLayout() {
+    const keys = document.querySelectorAll('.key');
+
+    const layout = isSymbols ? symbolKeys : letterKeys;
+
+    keys.forEach((key, index) => {
+        const { label, letters } = layout[index];
+        const [up, down] = letters.split('-');
+
+        // main key label switchen
+        let newMain = isUppercase && !isSymbols ? label.toUpperCase() : label.toLowerCase();
+        key.childNodes[0].nodeValue = newMain;
+
+        // secundary key label switchen
+        const upChar = isUppercase && !isSymbols ? up.toUpperCase() : up;
+        const downChar = isUppercase && !isSymbols ? down.toUpperCase() : down;
+
+        key.dataset.letters = `${upChar}-${downChar}`;
+        const lettersDiv = key.querySelector('.letters');
+        if (lettersDiv) {
+            lettersDiv.innerHTML = `↑ ${upChar} <div></div> ${downChar} ↓`;
+        }
+    });
+}
+
+document.querySelector('.toggle-case').addEventListener('touchend', () => {
+    isUppercase = !isUppercase;
+    updateKeyboardLayout();
+});
 });
