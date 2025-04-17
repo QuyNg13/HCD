@@ -32,9 +32,22 @@ window.addEventListener('DOMContentLoaded', () => {
             case 'down': selectedLetter = letters[1] || ''; break;
         }
 
+        // als shift actief is, hoofdletter typen en anders lowercase
+        if (isShiftActive) {
+            selectedLetter = selectedLetter.toUpperCase();
+        } else {
+            selectedLetter = selectedLetter.toLowerCase();
+        }
+
         // letter toevoegen aan de output
         if (selectedLetter) {
             output.value += selectedLetter;
+        }
+
+        // na de swipe, shift mode resetten als hij aan staat
+        if (isShiftActive) {
+            isShiftActive = false; 
+            updateKeyboardLayout();
         }
     }
 
@@ -54,10 +67,17 @@ window.addEventListener('DOMContentLoaded', () => {
         // Voegt de letter toe bij het loslaten van de toets
         key.addEventListener('touchend', (e) => {
             if (key.dataset.pressed === 'true' && !key.classList.contains('space')) {
-                output.value += key.innerText.charAt(0);
+                //als shift actief is, hoofdletter typen daarna keyboard naar lowercase en anders lowercase typen
+                if (isShiftActive) {
+                    output.value += key.innerText.charAt(0).toUpperCase();
+                    isShiftActive = false;
+                    updateKeyboardLayout();
+                } else {
+                    output.value += key.innerText.charAt(0);
+                }
             }
             key.dataset.pressed = 'false';
-        });
+        }); 
 
         // Detecteert swipe beweging
         key.addEventListener('touchmove', (e) => {
@@ -66,9 +86,9 @@ window.addEventListener('DOMContentLoaded', () => {
             let deltaX = e.touches[0].clientX - startX;
             let deltaY = e.touches[0].clientY - startY;
 
-            // Check if swipe distance is large enough
+            // Check od swipe beweging groot genoeg is
             if (Math.abs(deltaX) < swipe_threshold && Math.abs(deltaY) < swipe_threshold) {
-                return; // Don't trigger anything if swipe is too small
+                return; // Doet niks als de swipe te klein is
             }
 
             let direction = getSwipeDirection(deltaX, deltaY);
@@ -103,13 +123,12 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
 //===========================
-// Toggle case en symbols
+// Toggle symbols
 //===========================
 
-    let isUppercase = false;
-    let isSymbols = false;
+    let isSymbols = false; // voor cijfers en symbolen
 
-    // Original letter keys and swipe data
+    // letter layout
     const letterKeys = [
         { label: 'I', letters: 'Q-L' },
         { label: 'T', letters: 'V-Y' },
@@ -122,48 +141,23 @@ window.addEventListener('DOMContentLoaded', () => {
         { label: 'N', letters: 'U-.' },
     ];
 
-    // Alternative numbers/symbols layout
+    // cijfer/symbol layout
     const symbolKeys = [
-        { label: '1', letters: '!-~' },
-        { label: '2', letters: '@-`' },
-        { label: '3', letters: '#-^' },
-        { label: '4', letters: '$-*' },
-        { label: '5', letters: '%-(' },
-        { label: '6', letters: '^-)' },
-        { label: '7', letters: '&-_' },
-        { label: '8', letters: '*-+' },
-        { label: '9', letters: '(-=' },
+        { label: '1', letters: '!-?' },
+        { label: '2', letters: '@-#' },
+        { label: '3', letters: '$-€' },
+        { label: '4', letters: '%-&' },
+        { label: '5', letters: '0-*' },
+        { label: '6', letters: '(-)' },
+        { label: '7', letters: '/-"' },
+        { label: '8', letters: '+-=' },
+        { label: '9', letters: '.-,' },
     ];
 
     document.querySelector('.toggle-numbers').addEventListener('touchend', () => {
         isSymbols = !isSymbols;
         updateKeyboardLayout();
     });
-
-    // function updateKeyboardLayout() {
-    //     const keys = document.querySelectorAll('.key');
-
-    //     const layout = isSymbols ? symbolKeys : letterKeys;
-
-    //     keys.forEach((key, index) => {
-    //         const { label, letters } = layout[index];
-    //         const [up, down] = letters.split('-');
-
-    //         // main key label switchen
-    //         let newMain = isUppercase && !isSymbols ? label.toUpperCase() : label.toLowerCase();
-    //         key.childNodes[0].nodeValue = newMain;
-
-    //         // secundary key label switchen
-    //         const upChar = isUppercase && !isSymbols ? up.toUpperCase() : up;
-    //         const downChar = isUppercase && !isSymbols ? down.toUpperCase() : down;
-
-    //         key.dataset.letters = `${upChar}-${downChar}`;
-    //         const lettersDiv = key.querySelector('.letters');
-    //         if (lettersDiv) {
-    //             lettersDiv.innerHTML = `↑ ${upChar} <div></div> ${downChar} ↓`;
-    //         }
-    //     });
-    // }
 
     function updateKeyboardLayout() {
         const keys = document.querySelectorAll('.key');
@@ -173,27 +167,45 @@ window.addEventListener('DOMContentLoaded', () => {
             const { label, letters } = layout[index];
             let [up, down] = letters.split('-');
     
-            // Update main key label
-            let mainLetter = isSymbols ? label : (isUppercase ? label.toUpperCase() : label.toLowerCase());
+            // voor main letters laat hoofdletter zien als caps of shift aan is
+            let mainLetter = isSymbols ? label : (isCapsLockActive || isShiftActive ? label.toUpperCase() : label.toLowerCase());
             key.childNodes[0].nodeValue = mainLetter;
     
-            // Process swipe letters
+            // voor secundaire letters laat kleine letter zien als caps of shift aan is
             if (!isSymbols) {
-                up = isUppercase ? up.toUpperCase() : up.toLowerCase();
-                down = isUppercase ? down.toUpperCase() : down.toLowerCase();
+                up = isCapsLockActive || isShiftActive ? up.toUpperCase() : up.toLowerCase();
+                down = isCapsLockActive || isShiftActive ? down.toUpperCase() : down.toLowerCase();
             }
     
             key.dataset.letters = `${up}-${down}`;
     
             const lettersDiv = key.querySelector('.letters');
             if (lettersDiv) {
-                lettersDiv.innerHTML = `↑ ${up} <div></div> ${down} ↓`;
+                lettersDiv.innerHTML = `↑ ${up} | ${down} ↓`;
             }
         });
     }
 
+//===========================
+// Toggle shift en caps
+//===========================
+
+let isShiftActive = true; // voor shift 
+let isCapsLockActive = false; // voor caps lock 
+
     document.querySelector('.toggle-case').addEventListener('touchend', () => {
-        isUppercase = !isUppercase;
-        updateKeyboardLayout();
+        if (isCapsLockActive) {
+            // als Caps Lock actief is, gaat hij uit als je op de knop drukt
+            isCapsLockActive = false;
+        } else if (isShiftActive) {
+            // als Shift actief is, gaat caps aan en shift uit als je op de knop drukt
+            isCapsLockActive = true;
+            isShiftActive = false; 
+        } else {
+            // als er geen aan staat, gaat shift aan als je op de knop drukt
+            isShiftActive = true;
+        }
+    
+        updateKeyboardLayout(); // Update layout naar de nieuwe shift state
     });
 });
