@@ -194,16 +194,23 @@ let isShiftActive = true; // voor shift
 let isCapsLockActive = false; // voor caps lock 
 
     document.querySelector('.toggle-case').addEventListener('touchend', () => {
+        const shiftButton = document.querySelector('.toggle-case');
+
         if (isCapsLockActive) {
             // als Caps Lock actief is, gaat hij uit als je op de knop drukt
             isCapsLockActive = false;
+            shiftButton.classList.remove('caps-lock-active');
         } else if (isShiftActive) {
             // als Shift actief is, gaat caps aan en shift uit als je op de knop drukt
             isCapsLockActive = true;
             isShiftActive = false; 
+            shiftButton.classList.remove('shift-active'); 
+            shiftButton.classList.add('caps-lock-active'); 
         } else {
             // als er geen aan staat, gaat shift aan als je op de knop drukt
             isShiftActive = true;
+            shiftButton.classList.remove('caps-lock-active'); 
+            shiftButton.classList.add('shift-active'); 
         }
     
         updateKeyboardLayout(); // Update layout naar de nieuwe shift state

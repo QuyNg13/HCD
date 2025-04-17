@@ -57,6 +57,23 @@ button {
     font-size: 14px;
 }
 
+.shift-active {
+    div {
+        height: 0.2rem;
+        background: #f0f0f0;
+        width: 1rem;
+    }
+}
+
+.caps-lock-active {
+    div {
+        height: 0.4rem;
+        background: #f0f0f0;
+        width: 1.4rem;
+        font-size: 120%;
+    }
+}
+
 .letters {
     display: flex;
     align-items: center;
