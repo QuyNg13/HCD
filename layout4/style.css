@@ -55,13 +55,13 @@ button {
     border: none;
 
     font-weight: bold;
-    font-size: 24px;
+    font-size: 26px;
 }
 
 .letters {
     display: flex;
     align-items: center;
-    font-size: 20px;
+    font-size: 22px;
     margin-top: 5px;
     color: white;
     font-weight: normal;
