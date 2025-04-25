@@ -385,8 +385,6 @@ Uiteindelijk heb ik dit opgelost met `e.preventDefault()` in de eventlistener vo
 ```
 </details>
 
----
-
 ### Test
 Bij de eerste echte test met WEric ben ik op de volgende conclusies gekomen:
 - Het toetsebord moet naar de onderkant van het scherm zodat hij er beter bij kan en zodat er meer ruimte is voor de applicatie die er onder zit.
@@ -590,7 +588,42 @@ Uit de test heb ik de volgende conclusies gehaald:
 <summary><h2>Week 4</h2></summary>
 
 ## Doel
+Deze Week wil ik zo veel mogelijk verschillende versies maken van het toetsenbord met verschillende layouts om te testen bij Eric.
+Ik wil spelen met hoe de knoppen er uit zien en hoe de knoppen zijn geplaatst op het toetsenbord.
 
 ## Voortgang
+
+### Idee
+De knoppen zien er nu een beetje vol uit doordat er veeld ingen te zien zijn op de knoppen. Ik ga kijken hoeveel ik weg kan halen zonder dat het onduidelijk is wat de interacties zijn.
+Ik wil ook proberen de shift en symbolen knop verplaatsen.
+
+---
+
+### Layouts
+- In de eerste layout heb ik de streep tussen de secundaire letters verwijderd en ruimte tussen de letters gelaten. Ik heb dit gedat om te kijken of dit voor Eric overzichtelijker is.
+
+- In de tweede layout heb ik de `font-size` zo groot mogelijk gezet maar dat de letters nog wel op de knop passen om te kijken of dit overzichtelijker is.
+
+- In de derde layout heb ik de layout zo veranderd zodat de spatie en backspace rechts onderin het scherm staan. De shift en sybolen knop heb ik er omheen geplaatst omdat deze minder gebruikt worden.
+Ik hoop hiermee te testen of de spatie en backspace op deze locatie beter bereikbaar zijn voor Eric. Ook heb ik kleuren aan spatie en backspace gegeven om duidelijker te maken wat de knop doet.
+De pijlen die naast de secundaire letters staan hebben nu een minder opvallende kleur om de toetsen hopelijk iets overzichtelijker te maken.
+
+- In de vierde versie heb ik de nieuwe layout gebruikt maar dat met de extra grote letters.
+
+---
+
+### Test
+Tijdens de laatste test heb ik vooral de eerste en laatste versie van het toetsenbord getest. Hier heb ik de volgende punten gevonden:
+- Hij had moeite met letters vinden en als hij ze had gevonden haalt hij vaak omhoog en omlaag swipen door elkaar.
+- De letter grootte in de originele versie was goed genoeg, nog grotere letters was niet perse nodig. Dit geldt ook voor de tekens en cijfers.
+- De hoofdletter functionaliteit werkt zoals hij dat verwacht. We zijn tijdens het testen alleen achter gekomen dat de hoofdletters van de secundaire letters het niet doen wanneer caps-lock aan staat.
+- De swipe drempel zou hoger kunnen aangezien Eric best grote swipe bewgingen maakt op zijn scherm.
+
+### Verbeteringen in de toekomst
+Als ik nog meer tijd had voor het project zou ik als eerst het caps- lock probleem oplossen. 
+Hierna wil ik graag de punten van de laatste test oplossen:
+- De secundaire letters boven elkar zetten in plaat van naast elkaar, en de pijlen weg laten om te kijjken of dat intuïtiever is.
+- lettergrootte aanpasbaar kunnen maken.
+- Een knop om de getypte tekst te kunnen kopieëren.
 
 </details>
