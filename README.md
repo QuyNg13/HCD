@@ -385,6 +385,8 @@ Uiteindelijk heb ik dit opgelost met `e.preventDefault()` in de eventlistener vo
 ```
 </details>
 
+---
+
 ### Test
 Bij de eerste echte test met WEric ben ik op de volgende conclusies gekomen:
 - Het toetsebord moet naar de onderkant van het scherm zodat hij er beter bij kan en zodat er meer ruimte is voor de applicatie die er onder zit.
