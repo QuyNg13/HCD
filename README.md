@@ -346,6 +346,9 @@ function handleSwipe(key, direction) {
 }
 ```
 </details>
+
+<img src="images/left-right.png">
+<img src="images/up-down.png">
 <br>
 
 Ik wou graag en backspace maken waarbij het mogelijk is om heb ingedrukt te houden om veel tekst te verwijderen. 
@@ -564,6 +567,9 @@ let isCapsLockActive = false; // voor caps lock
 });
 ```
 </details>
+<img src="images/uppercase.png">
+<img src="images/lowercase.png">
+<img src="images/symbols.png">
 <br>
 
 Ik heb deze week ik aan de styling gewerkt om logischer te maken dan wat chatGPT heeft gemaakt.
@@ -601,14 +607,18 @@ Ik wil ook proberen de shift en symbolen knop verplaatsen.
 
 ### Layouts
 - In de eerste layout heb ik de streep tussen de secundaire letters verwijderd en ruimte tussen de letters gelaten. Ik heb dit gedat om te kijken of dit voor Eric overzichtelijker is.
+<img src="images/layout1.png">
 
 - In de tweede layout heb ik de `font-size` zo groot mogelijk gezet maar dat de letters nog wel op de knop passen om te kijken of dit overzichtelijker is.
+<img src="images/layout2.png">
 
 - In de derde layout heb ik de layout zo veranderd zodat de spatie en backspace rechts onderin het scherm staan. De shift en sybolen knop heb ik er omheen geplaatst omdat deze minder gebruikt worden.
 Ik hoop hiermee te testen of de spatie en backspace op deze locatie beter bereikbaar zijn voor Eric. Ook heb ik kleuren aan spatie en backspace gegeven om duidelijker te maken wat de knop doet.
 De pijlen die naast de secundaire letters staan hebben nu een minder opvallende kleur om de toetsen hopelijk iets overzichtelijker te maken.
+<img src="images/layout3.png">
 
 - In de vierde versie heb ik de nieuwe layout gebruikt maar dat met de extra grote letters.
+<img src="images/layout4.png">
 
 ---
 
