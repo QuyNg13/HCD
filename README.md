@@ -458,6 +458,7 @@ document.querySelectorAll('.key').forEach(key => {
 });
 ```
 </details>
+<br>
 
 Voor de verschillende toetsenborden heb ik de verschillende layouts opgeslagen in variables (`letterKeys` voor hoofdletters en `symbolKeys` voor cijfers en symbolen).
 Deze koppel ik aan booleans (`isSymbols`, `isShiftActive` en `isCapsLockActive`) om in en uit te kunnen schakelen.
@@ -563,6 +564,7 @@ let isCapsLockActive = false; // voor caps lock
 });
 ```
 </details>
+<br>
 
 Ik heb deze week ik aan de styling gewerkt om logischer te maken dan wat chatGPT heeft gemaakt.
 
